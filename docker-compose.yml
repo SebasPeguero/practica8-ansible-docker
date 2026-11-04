@@ -64,6 +64,8 @@ services:
       context: .
       dockerfile: Dockerfile.ansible
     container_name: ansible-controller
+    environment:
+      - ANSIBLE_CONFIG=/ansible/ansible.cfg
     volumes:
       - .:/ansible
     depends_on:

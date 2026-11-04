@@ -91,3 +91,39 @@ El playbook ejecuta automáticamente las 5 tareas en los 5 servidores:
    ```bash
    docker compose down
    ```
+
+---
+
+## 📊 Evidencia de Ejecución Exitosa
+
+### Resumen del Playbook de Ansible (`PLAY RECAP`):
+```text
+PLAY RECAP *********************************************************************
+server1                    : ok=6    changed=4    unreachable=0    failed=0
+server2                    : ok=6    changed=4    unreachable=0    failed=0
+server3                    : ok=6    changed=4    unreachable=0    failed=0
+server4                    : ok=6    changed=4    unreachable=0    failed=0
+server5                    : ok=6    changed=4    unreachable=0    failed=0
+```
+
+### Verificación del archivo `/app/hola.txt` y `cowsay`:
+```text
+$ docker exec ubuntu-server1 cat /app/hola.txt
+=============================================
+¡Hola Mundo desde Ansible!
+Servidor: server1
+Estudiante: Sebastián Peguero
+Matrícula: 2025-1172
+Materia: Electiva II (DevOps) - Práctica 8
+=============================================
+
+$ docker exec ubuntu-server1 /usr/games/cowsay "Ansible exitoso!"
+ __________________
+< Ansible exitoso! >
+ ------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+```
