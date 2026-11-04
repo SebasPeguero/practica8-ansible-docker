@@ -1,0 +1,47 @@
+---
+- name: Automatización de tareas en 5 servidores Ubuntu con Ansible
+  hosts: servidores
+  become: true
+  tasks:
+    - name: 1. Actualizar caché de APT del sistema operativo
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: 2. Crear el usuario itla en cada servidor
+      user:
+        name: itla
+        state: present
+        shell: /bin/bash
+        create_home: yes
+
+    - name: 3. Crear carpeta app
+      file:
+        path: /app
+        state: directory
+        mode: '0755'
+        owner: itla
+        group: itla
+
+    - name: 4. Crear archivo hola.txt en la carpeta app en cada servidor
+      copy:
+        dest: /app/hola.txt
+        content: |
+          =============================================
+          ¡Hola Mundo desde Ansible!
+          Servidor: {{ inventory_hostname }}
+          Estudiante: Sebastián Peguero
+          Matrícula: 2025-1172
+          Materia: Electiva II (DevOps) - Práctica 8
+          Fecha de Aprovisionamiento: {{ ansible_date_time.iso8601 }}
+          =============================================
+        mode: '0644'
+        owner: itla
+        group: itla
+
+    - name: 5. Instalar la aplicación cowsay y htop en cada servidor
+      apt:
+        name:
+          - cowsay
+          - htop
+        state: present

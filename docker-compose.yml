@@ -1,0 +1,80 @@
+services:
+  server1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ubuntu-server1
+    hostname: server1
+    restart: unless-stopped
+    ports:
+      - "2201:22"
+    networks:
+      - ansible-net
+
+  server2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ubuntu-server2
+    hostname: server2
+    restart: unless-stopped
+    ports:
+      - "2202:22"
+    networks:
+      - ansible-net
+
+  server3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ubuntu-server3
+    hostname: server3
+    restart: unless-stopped
+    ports:
+      - "2203:22"
+    networks:
+      - ansible-net
+
+  server4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ubuntu-server4
+    hostname: server4
+    restart: unless-stopped
+    ports:
+      - "2204:22"
+    networks:
+      - ansible-net
+
+  server5:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ubuntu-server5
+    hostname: server5
+    restart: unless-stopped
+    ports:
+      - "2205:22"
+    networks:
+      - ansible-net
+
+  ansible-controller:
+    build:
+      context: .
+      dockerfile: Dockerfile.ansible
+    container_name: ansible-controller
+    volumes:
+      - .:/ansible
+    depends_on:
+      - server1
+      - server2
+      - server3
+      - server4
+      - server5
+    networks:
+      - ansible-net
+
+networks:
+  ansible-net:
+    driver: bridge
